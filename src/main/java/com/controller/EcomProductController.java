@@ -1,5 +1,7 @@
  package com.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,14 @@ public class EcomProductController
 		
 		productdao.addProduct(productbean);
 		return "Welcome";
+	}
+	
+	@GetMapping("/products")
+	public String listproducts(Model model)
+	{
+		List<EcomProductBean> products =productdao.getAllProducts();
+		model.addAttribute("products",products);
+		return "EcomListProducts";
 	}
 	
 }
