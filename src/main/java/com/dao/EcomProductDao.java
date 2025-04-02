@@ -27,4 +27,9 @@ public class EcomProductDao
 		return list;
 	}
 	
+	public void deleteProduct(Integer productId)
+	{
+		stmt.update("delete from ecomproducts where productId = ?",productId);
+	}
+	
 }
