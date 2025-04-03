@@ -10,19 +10,20 @@
 </head>
 <body>
 	<h1>List products</h1>
-	<a href="newproduct">New Product </a>
+	<a href="newproduct">New Product </a>&nbsp
+	<a href="deleteproductbyname">Delete Product by Name</a>
 	<% List<EcomProductBean> products = (List<EcomProductBean>) request.getAttribute("products"); %>
 <table border="1">
 	<tr>
 		<th>ProductId</th>
 		<th>ProductName</th>
-		<th>Action</th>
+		<th colspan="2">Action</th>
 	</tr>
 	<% 
 		for(EcomProductBean p : products)
 		{
 			out.print("<tr>");
-			out.print("<td>"+p.getProductId()+"</td><td>"+p.getProductName() + "</td><td><a href='deleteproducts?productId="+p.getProductId()+"'>Delete</a></td>");
+			out.print("<td>"+p.getProductId()+"</td><td>"+p.getProductName() + "</td><td><a href='deleteproducts?productId="+p.getProductId()+"'>Delete</a></td><td><a href='viewproduct?productId="+p.getProductId()+"'>View</a></td>");
 			out.print("</tr>");
 		}
 	

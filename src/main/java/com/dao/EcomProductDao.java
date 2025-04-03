@@ -20,8 +20,6 @@ public class EcomProductDao
 				,productbean.getProductName(),productbean.getCategory(),productbean.getQty(),productbean.getPrice());
 	}
 	
-	
-
 	public List<EcomProductBean> getAllProducts() {
 		List<EcomProductBean> list=	stmt.query("select * from ecomproducts", new BeanPropertyRowMapper<EcomProductBean>(EcomProductBean.class));
 		return list;
@@ -32,4 +30,15 @@ public class EcomProductDao
 		stmt.update("delete from ecomproducts where productId = ?",productId);
 	}
 	
+	public void deleteProductByName(String productName)
+	{
+		stmt.update("delete from ecomproducts where productName = ?",productName);
+	}
+	
+	public EcomProductBean getProductById(Integer productId)
+	{
+		EcomProductBean bean= stmt.queryForObject("select * from ecomproducts where productId=?", new BeanPropertyRowMapper<>(EcomProductBean.class),new Object[] {productId});
+		return bean;
+		
+	}
 }

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bean.EcomProductBean;
 import com.dao.EcomProductDao;
@@ -28,9 +29,9 @@ public class EcomProductController
 	}
 	
 	@PostMapping("/saveproduct")
-	public String saveProduct(EcomProductBean productbean,Model model )
+	public String saveProduct(EcomProductBean productbean,Model model,@RequestParam("masterImage") MultipartFile masterImage)
 	{
-		
+		System.out.println("Image: "+masterImage.getOriginalFilename());
 		productdao.addProduct(productbean);
 		return "redirect:/products";
 	}
@@ -49,5 +50,26 @@ public class EcomProductController
 		System.out.println("deleteProduct()"+productId);
 		productdao.deleteProduct(productId);
 		return"redirect:/products";
+	}
+	
+	@GetMapping("/deleteproductbyname")
+	public String deleteProductByName()
+	{
+		return "DeleteProductByName";
+	}
+	
+	@PostMapping("/deleteproducts")
+	public String deleteProducts(@RequestParam("productName") String productName)
+	{
+		productdao.deleteProductByName(productName);
+		return "redirect:/products";
+	}
+	
+	@GetMapping("/viewproduct")
+	public String viewProduct(@RequestParam("productId") Integer productId,Model model)
+	{
+		EcomProductBean productbean =  productdao.getProductById(productId);
+		model.addAttribute("product",productbean);
+		return "ViewProduct";
 	}
 }
