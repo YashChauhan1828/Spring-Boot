@@ -1,7 +1,7 @@
  package com.controller;
 
 import java.util.List;
-
+import com.service.fileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +16,13 @@ import com.dao.EcomProductDao;
 @Controller
 public class EcomProductController 
 {
-	
+
+   
 	@Autowired
 	EcomProductDao productdao;
+	
+	@Autowired
+	fileUploadService FileUploadService;
 	
 	Boolean isError = false;
 	
@@ -31,7 +35,7 @@ public class EcomProductController
 	@PostMapping("/saveproduct")
 	public String saveProduct(EcomProductBean productbean,Model model,@RequestParam("masterImage") MultipartFile masterImage)
 	{
-		System.out.println("Image: "+masterImage.getOriginalFilename());
+		FileUploadService.uploadproductImage(masterImage);
 		productdao.addProduct(productbean);
 		return "redirect:/products";
 	}
