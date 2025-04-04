@@ -13,7 +13,7 @@ public class EcomUserDao
 	JdbcTemplate stmt;
 	public void inserUser(EcomUserBean userbean)
 	{
-		stmt.update("insert into ecomusers(firstName,email,password)values(?,?,?)",userbean.getFirstName(),
-				userbean.getEmail(),userbean.getPassword());
+		stmt.update("insert into ecomusers(firstName,email,password,profilePic)values(?,?,?,?)",userbean.getFirstName(),
+				userbean.getEmail(),userbean.getPassword(),userbean.getProfilePicturePath());
 	}
 }

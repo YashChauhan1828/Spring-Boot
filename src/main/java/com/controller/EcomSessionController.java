@@ -1,5 +1,8 @@
 package com.controller;
 
+import java.io.File;
+
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.bean.EcomUserBean;
 import com.dao.EcomUserDao;
+import com.service.fileUploadService;
 import com.util.Validators;
 
 @Controller
@@ -17,6 +21,9 @@ public class EcomSessionController
 	EcomUserDao userdao;
 	boolean isError = false;
 	
+	@Autowired
+	fileUploadService FileUploadService;
+	
 	@GetMapping("esignup")
 	public String registration()
 	{
@@ -25,8 +32,10 @@ public class EcomSessionController
 	@PostMapping("esignup")
 	public String Signuppost(EcomUserBean userbean,Model model)
 	{
-		
-		
+		String path = "D:\\sts\\24-spring-boot\\src\\main\\webapp\\images\\profilepicture";
+		System.out.println(userbean.getProfilePicture().getOriginalFilename());
+		FileUploadService.uploadUserImage(userbean.getProfilePicture(),userbean.getEmail());
+		userbean.setProfilePicturePath("images//profilepic//"+userbean.getEmail()+"//"+userbean.getProfilePicture().getOriginalFilename());
 		if(Validators.isBlank(userbean.getFirstName()))
 		{
 			isError = true;
@@ -82,6 +91,7 @@ public class EcomSessionController
 		}
 		else
 		{
+		
 			userdao.inserUser(userbean);
 			return"EcomLogin";
 		}

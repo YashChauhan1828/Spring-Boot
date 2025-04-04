@@ -1,12 +1,28 @@
 package com.bean;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class EcomUserBean 
 {
 	private String id;
 	private String firstName;
 	private String email;
 	private String password;
+	private MultipartFile profilePicture;
+	private String ProfilePicturePath;
 	
+	public String getProfilePicturePath() {
+		return ProfilePicturePath;
+	}
+	public void setProfilePicturePath(String profilePicturePath) {
+		ProfilePicturePath = profilePicturePath;
+	}
+	public MultipartFile getProfilePicture() {
+		return profilePicture;
+	}
+	public void setProfilePicture(MultipartFile profilePicture) {
+		this.profilePicture = profilePicture;
+	}
 	public String getId() {
 		return id;
 	}

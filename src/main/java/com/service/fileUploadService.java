@@ -23,4 +23,20 @@ public class fileUploadService
 			e.printStackTrace();
 		}
 	}
+	public void uploadUserImage(MultipartFile masterImage , String email) {
+		System.out.println("Image: "+masterImage.getOriginalFilename() );
+		String path = "D:\\sts\\24-spring-boot\\src\\main\\webapp\\images\\profilepicture";
+		File dir = new File(path,email);
+		dir.mkdir();
+		try 
+		{
+			byte b[] = masterImage.getBytes();
+			File file = new File(dir,masterImage.getOriginalFilename());
+			FileUtils.writeByteArrayToFile(file, b);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
 }
