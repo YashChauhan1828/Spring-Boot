@@ -10,7 +10,6 @@
 <h1>Welcome</h1>
 
 FirstName : ${user.firstName}<br>
-Email : ${user.email}<br>
-Password : ${user.password}<br>
-</body>
+path: <img src="${user.profilePicturePath}" height="100px" width="100px" /><br>
+<a href="products">Products</a>
 </html>

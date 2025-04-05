@@ -1,8 +1,5 @@
 package com.controller;
 
-import java.io.File;
-
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +10,8 @@ import com.bean.EcomUserBean;
 import com.dao.EcomUserDao;
 import com.service.fileUploadService;
 import com.util.Validators;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class EcomSessionController 
@@ -29,13 +28,43 @@ public class EcomSessionController
 	{
 		return "EcomSignUp";
 	} 
+	
+	@GetMapping(value = {"/","elogin"})
+	public String eLogin()
+	{
+		return"EcomLogin";
+	}
+	
+	@PostMapping("/elogin")
+	public String eLoginPost(EcomUserBean userbean,Model model,HttpSession session)
+	{
+		System.out.println(userbean.getEmail());
+		System.out.println(userbean.getPassword());
+		System.out.println(userbean.getProfilePicturePath());
+		EcomUserBean dbUser = userdao.authenticate(userbean.getEmail(), userbean.getPassword());
+		if(dbUser == null)
+		{
+			model.addAttribute("error","Inavlid Credentials");
+			return "EcomLogin";
+		}
+		else
+		{
+			session.setAttribute("user", dbUser);
+			model.addAttribute("firstName",dbUser.getFirstName());
+			model.addAttribute("profilePicturePath",dbUser.getProfilePicturePath());
+			return"Welcome";
+		}
+//		System.out.println(userbean.getEmail());
+	}
+
 	@PostMapping("esignup")
 	public String Signuppost(EcomUserBean userbean,Model model)
 	{
-		String path = "D:\\sts\\24-spring-boot\\src\\main\\webapp\\images\\profilepicture";
+//		
 		System.out.println(userbean.getProfilePicture().getOriginalFilename());
 		FileUploadService.uploadUserImage(userbean.getProfilePicture(),userbean.getEmail());
-		userbean.setProfilePicturePath("images//profilepic//"+userbean.getEmail()+"//"+userbean.getProfilePicture().getOriginalFilename());
+		userbean.setProfilePicturePath("images\\profilepicture\\" + userbean.getEmail() + "\\" + userbean.getProfilePicture().getOriginalFilename());
+
 		if(Validators.isBlank(userbean.getFirstName()))
 		{
 			isError = true;
