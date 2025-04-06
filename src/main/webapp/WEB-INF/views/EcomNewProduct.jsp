@@ -13,7 +13,7 @@ Product Name: <input type="text" name="productName"/><br>
 Category: <input type="text" name="category"/><br>
 Price: <input type="text" name="price"/><br>
 Quantity: <input type="text" name="qty"/><br>
-MasterImage: <input type="file" name="masterImage"/><br><br>
+MasterImage: <input type="file" name="productImage"/><br><br>
 <input type="submit" value="Add Product"/>
 </form>
 </body>

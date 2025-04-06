@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>View Product</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<h2>View Product</h2>
+<h2>View Product</h2>
 	ProductName: ${product.productName}<br>
 	Price: ${product.price }<br>
 	Category: ${product.category}<br>

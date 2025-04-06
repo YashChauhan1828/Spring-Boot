@@ -1,5 +1,7 @@
 package com.bean;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class EcomProductBean 
 {
 	private Integer productId;
@@ -7,7 +9,27 @@ public class EcomProductBean
 	private String category;
 	private Integer qty;
 	private float price;
+	private MultipartFile productImage;
+	private String productImagePath;
 	
+	public MultipartFile getProductImage() 
+	{
+		return productImage;
+	}
+	public void setProductImage(MultipartFile productImage) 
+	{
+		this.productImage = productImage;
+	}
+	
+	
+	public String getProductImagePath() 
+	{
+		return productImagePath;
+	}
+	public void setProductImagePath(String productImagePath) 
+	{
+		this.productImagePath = productImagePath;
+	}
 	public Integer getProductId() 
 	{
 		return productId;

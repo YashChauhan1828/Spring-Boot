@@ -16,8 +16,8 @@ public class EcomProductDao
 	JdbcTemplate stmt;
 	public void addProduct(EcomProductBean productbean) 
 	{
-		stmt.update("insert into ecomproducts (productName,category,qty,price) values (?,?,?,?)"
-				,productbean.getProductName(),productbean.getCategory(),productbean.getQty(),productbean.getPrice());
+		stmt.update("insert into ecomproducts (productName,category,qty,price,productImagePath) values (?,?,?,?,?)"
+				,productbean.getProductName(),productbean.getCategory(),productbean.getQty(),productbean.getPrice(),productbean.getProductImagePath());
 	}
 	
 	public List<EcomProductBean> getAllProducts() {

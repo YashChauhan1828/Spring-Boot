@@ -33,9 +33,11 @@ public class EcomProductController
 	}
 	
 	@PostMapping("/saveproduct")
-	public String saveProduct(EcomProductBean productbean,Model model,@RequestParam("masterImage") MultipartFile masterImage)
+	public String saveProduct(EcomProductBean productbean,Model model)
 	{
-		FileUploadService.uploadproductImage(masterImage);
+		System.out.println(productbean.getProductImage().getOriginalFilename());
+		FileUploadService.uploadproductImage(productbean.getProductImage());
+		productbean.setProductImagePath("images//products//"+productbean.getProductImage().getOriginalFilename());
 		productdao.addProduct(productbean);
 		return "redirect:/products";
 	}
