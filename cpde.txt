@@ -1,0 +1,21 @@
+	<div class="container-fluid">
+	<h1>All products</h1>
+	
+	<a href="ehome">home</a><br><br>
+	
+	
+<table border="1">
+	<tr>
+		<th>ProductId</th>
+		<th>ProductName</th>
+		
+	</tr>
+	
+			out.print("<tr>");
+			out.print("<td>"+p.getProductId()+"</td><td>"+p.getProductName() + "</td>");
+			out.print("</tr>");
+		}
+	
+	%>
+</table>
+</div>

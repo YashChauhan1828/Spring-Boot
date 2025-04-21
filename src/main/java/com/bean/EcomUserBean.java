@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class EcomUserBean 
 {
-	private String id;
+	private Integer userId;
 	private String firstName;
 	private String email;
 	private String password;
@@ -27,13 +27,13 @@ public class EcomUserBean
 	{
 		this.profilePicture = profilePicture;
 	}
-	public String getId() 
+	public Integer getUserId() 
 	{
-		return id;
+		return userId;
 	}
-	public void setId(String id) 
+	public void setUserId(Integer userId) 
 	{
-		this.id = id;
+		this.userId = userId;
 	}
 	public String getFirstName() 
 	{
