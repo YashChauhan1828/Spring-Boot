@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Popular Products</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -178,6 +178,12 @@ a:hover {
 </head>
 <body>
 <% List<EcomProductBean> products = (List<EcomProductBean>) request.getAttribute("products"); %>
+<div class="row">
+	<div class="col-md">
+	<a href="logout">Logout</a>
+	</div>
+
+</div>
 <section class="section-products">
 		<div class="container">
 				<div class="row justify-content-center text-center">
@@ -201,9 +207,8 @@ a:hover {
 												</a>
 												<ul>
 														<li><a href="addtocart?productId=<%=p.getProductId()%>"><i class="fas fa-shopping-cart"></i></a></li>
-														<li><a href="#"><i class="fas fa-heart"></i></a></li>
-														<li><a href="#"><i class="fas fa-plus"></i></a></li>
-														<li><a href="userproductview?productId=<%=p.getProductId()%>"><i class="fas fa-expand"></i></a></li>
+														<li><a href="#"><i class="fas fa-heart"></i></a></li>											
+														<li><a href="userproductview?productId=<%=p.getProductId()%>"><i class="fas fa-eye"></i></a></li>
 												</ul>
 										</div>
 										<div class="part-2">

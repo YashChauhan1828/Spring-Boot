@@ -126,4 +126,10 @@ public class EcomSessionController
 		}
 		
 	}
+	@GetMapping("/logout")
+	public String logout(HttpSession session)
+	{
+		session.invalidate();
+		return "redirect:/elogin";
+	}
 }
