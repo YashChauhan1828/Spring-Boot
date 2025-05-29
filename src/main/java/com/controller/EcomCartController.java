@@ -47,9 +47,17 @@ public class EcomCartController
 		return "MyCart";
 	}
 	@GetMapping("/removecartitem")
-	public String removeCartItem(@RequestParam("productId") Integer productId)
+	public String removeCartItem(@RequestParam("productId") Integer productId , HttpSession session)
 	{
-		cartDao.deleteproduct(productId);
+		EcomUserBean userbean = (EcomUserBean)session.getAttribute("user");
+		Integer userID = userbean.getUserId();
+		System.out.println(userbean.getUserId());
+		
+		EcomCartBean cartBean = new EcomCartBean();
+		
+		cartBean.setProductId(productId);
+		cartBean.setUserId(userID);
+		cartDao.deleteproduct(cartBean);
 		return "redirect:/mycart";
 	}
 }

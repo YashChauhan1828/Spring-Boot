@@ -28,8 +28,10 @@ public class EcomCartDao
 	return products;
 	}
 	
-	public void deleteproduct(Integer productId)
+	public void deleteproduct(EcomCartBean cartBean)
 	{
-		stmt.update("DELETE cart FROM cart JOIN ecomproducts ON cart.productId = ecomproducts.productId WHERE cart.productId = ?",productId);
+		stmt.update(
+				"DELETE cart FROM cart JOIN ecomproducts ON cart.productId = ecomproducts.productId WHERE cart.productId = ? and cart.userId=?",
+				cartBean.getProductId(),cartBean.getUserId());
 	}
 }
