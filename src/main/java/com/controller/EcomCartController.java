@@ -1,11 +1,15 @@
 package com.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bean.EcomCartBean;
+import com.bean.EcomProductBean;
 import com.bean.EcomUserBean;
 import com.dao.EcomCartDao;
 
@@ -32,5 +36,20 @@ public class EcomCartController
 		cartDao.addToCart(cartBean);
 		
 		return"redirect:/userproducts";
+	}
+	@GetMapping("/mycart")
+	public String myCart(HttpSession session , Model model) 
+	{
+		EcomUserBean userBean = (EcomUserBean)session.getAttribute("user");
+		Integer userId = userBean.getUserId();
+		List<EcomProductBean> products =  cartDao.myCart(userId);
+		model.addAttribute("products",products);
+		return "MyCart";
+	}
+	@GetMapping("/removecartitem")
+	public String removeCartItem(@RequestParam("productId") Integer productId)
+	{
+		cartDao.deleteproduct(productId);
+		return "redirect:/mycart";
 	}
 }

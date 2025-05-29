@@ -180,7 +180,8 @@ a:hover {
 <% List<EcomProductBean> products = (List<EcomProductBean>) request.getAttribute("products"); %>
 <div class="row">
 	<div class="col-md">
-	<a href="logout">Logout</a>
+	<a href="logout">Logout</a> |
+	<a href="mycart">My Cart</a>
 	</div>
 
 </div>
