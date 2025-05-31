@@ -1,3 +1,4 @@
+<%@page import="com.bean.EcomProductCartBean"%>
 <%@page import="java.util.List"%>
 <%@page import="com.bean.EcomProductBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -11,28 +12,38 @@
 <body>
 	<h1>My Cart</h1>
 	
-	<% List<EcomProductBean> products = (List<EcomProductBean>) request.getAttribute("products"); 
+	<% List<EcomProductCartBean> products = (List<EcomProductCartBean>) request.getAttribute("products"); 
 	Float Total_Price = 0.0f;
 	%>
 <table border="1">
 	<tr>
+		<th>CartId</th>
 		<th>ProductId</th>
 		<th>ProductName</th>
 		<th>Image</th>
 		<th>Price</th>
+		<th>Qty</th>
+		<th>Total Price</th>
+		<th>Decrease Quantity</th>
+		<th>Increase Quantity</th>
 		<th>Action</th>
 	</tr>
 	<% 
-		for(EcomProductBean p : products)
+		for(EcomProductCartBean p : products)
 		{
 			out.print("<tr>");
+			out.print("<td>"+p.getCartId()+"</td>");
 			out.print("<td>"+p.getProductId()+"</td><td>"+p.getProductName() + "</td>");
 			out.print("<td><img src='"+p.getProductImagePath()+"'/></td>");
 			out.print("<td>"+p.getPrice()+"</td>");
-			out.print("<td><a href ='removecartitem?productId="+p.getProductId()+"'>Remove</a></td>");
+			out.print("<td>"+p.getQty()+"</td>");
+			out.print("<td>"+p.getQty()*p.getPrice()+"</td>");
+			out.print("<td><a href='minusqty?cartId="+p.getCartId()+"'>-</td>");
+			out.print("<td><a href='plusqty?cartId="+p.getCartId()+"'>+</td>");
+			out.print("<td><a href ='removecartitem?cartId="+p.getCartId()+"'>Remove</a></td>");
 			out.print("</tr>");
 		
-			Total_Price += p.getPrice();
+			Total_Price += (p.getPrice()*p.getQty());
 		}
 	
 	%>

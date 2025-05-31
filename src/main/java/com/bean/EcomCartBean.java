@@ -5,7 +5,16 @@ public class EcomCartBean
 	private Integer cartId;
 	private Integer userId;
 	private Integer productId;
+	private Integer qty;
 	
+	public Integer getQty() 
+	{
+		return qty;
+	}
+	public void setQty(Integer qty) 
+	{
+		this.qty = qty;
+	}
 	public Integer getCartId() 
 	{
 		return cartId;

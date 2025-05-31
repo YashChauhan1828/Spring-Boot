@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bean.EcomCartBean;
 import com.bean.EcomProductBean;
+import com.bean.EcomProductCartBean;
 import com.bean.EcomUserBean;
 import com.dao.EcomCartDao;
 
@@ -42,22 +43,31 @@ public class EcomCartController
 	{
 		EcomUserBean userBean = (EcomUserBean)session.getAttribute("user");
 		Integer userId = userBean.getUserId();
-		List<EcomProductBean> products =  cartDao.myCart(userId);
+		List<EcomProductCartBean> products =  cartDao.myCart(userId);
 		model.addAttribute("products",products);
 		return "MyCart";
 	}
 	@GetMapping("/removecartitem")
-	public String removeCartItem(@RequestParam("productId") Integer productId , HttpSession session)
+	public String removeCartItem(@RequestParam("cartId") Integer cartId )
 	{
-		EcomUserBean userbean = (EcomUserBean)session.getAttribute("user");
-		Integer userID = userbean.getUserId();
-		System.out.println(userbean.getUserId());
 		
-		EcomCartBean cartBean = new EcomCartBean();
+		cartDao.deleteproduct(cartId);
+		return "redirect:/mycart";
+	}
+	@GetMapping("/minusqty")
+	public String minusQty(@RequestParam("cartId") Integer cartId) 
+	{
 		
-		cartBean.setProductId(productId);
-		cartBean.setUserId(userID);
-		cartDao.deleteproduct(cartBean);
+		
+		cartDao.minusQty(cartId);
+		return "redirect:/mycart";
+	}
+	
+	@GetMapping("/plusqty")
+	public String plusQty(@RequestParam("cartId") Integer cartId) 
+	{
+		
+		cartDao.plusQty(cartId);
 		return "redirect:/mycart";
 	}
 }
