@@ -49,8 +49,9 @@
 	%>
 </table>
 <br> Sub Total <%=Total_Price %>
+<% session.setAttribute("totalPrice", Total_Price); %>
 <br><br>
-<a href="checkout">Checkout</a>
+<a href="inputmail">Checkout</a>
 <a href="userproducts">Back To Products</a>
 </body>
 </html>

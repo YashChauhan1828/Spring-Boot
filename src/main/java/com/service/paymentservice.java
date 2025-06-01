@@ -44,7 +44,7 @@ public class paymentservice {
         txnRequest.setTransactionType(TransactionTypeEnum.AUTH_CAPTURE_TRANSACTION.value());
         txnRequest.setPayment(paymentType);
         txnRequest.setCustomer(customer);
-        txnRequest.setAmount(new BigDecimal(10000).setScale(2, RoundingMode.CEILING));
+        txnRequest.setAmount(new BigDecimal(paymentbean.getPrice()).setScale(2, RoundingMode.CEILING));
 
         // Create the API request and set the parameters for this specific request
         CreateTransactionRequest apiRequest = new CreateTransactionRequest();

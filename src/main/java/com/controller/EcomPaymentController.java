@@ -10,6 +10,8 @@ import com.bean.EcomProductCartBean;
 import com.service.EmailService;
 import com.service.paymentservice;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,18 +30,13 @@ public class EcomPaymentController
 	@Autowired
 	paymentservice PaymentService;
 	
-	@GetMapping("/checkout")
-	public String Checkout()
-	{
-		
-		return "Checkout";
-	}
 	@PostMapping("/epayment")
 	public String Epayment(EcomPaymentBean paymentbean)
 	{
 		System.out.println(paymentbean.getCreditcardnumber());
 		System.out.println(paymentbean.getCvv());
 		System.out.println(paymentbean.getDate());
+		System.out.println(paymentbean.getPrice());
 		PaymentService.run(paymentbean);
 		return "Sucess";
 	}
@@ -51,11 +48,13 @@ public class EcomPaymentController
 	}
 	
 	@PostMapping("/sendmail")
-	public String SendMail(@RequestParam("email") String email) 
+	public String SendMail(@RequestParam("email") String email,HttpSession session,Model model ) 
 	{
 		System.out.println(email);
 		emailservice.sendDemoMail(email, "HI welcome to ABCD");
-		return "Sucess";
+		Float totalPrice = (Float)session.getAttribute("totalPrice");
+		model.addAttribute(totalPrice);
+		return "Checkout";
 	}
 	
 }
