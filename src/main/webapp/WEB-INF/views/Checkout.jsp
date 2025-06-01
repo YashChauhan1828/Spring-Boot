@@ -10,9 +10,9 @@
 <h1>Checkout</h1>
 Final Amount:${price.qty*price.price}
 <br>
-Credit Card Number:<input type="text" value="creditcardnumber" placeholder="Enter your Credit Card Number"/><br>
-Expire Date:<input type="date" value="expdate"/><br>
-CVV Number:<input type="text" value="cvv" placeholder="Enter your CVV Number"/><br>
+Credit Card Number:<input type="text" name="creditcardnumber" placeholder="Enter your Credit Card Number"/><br>
+Expire Date:<input type="date" name="expdate"/><br>
+CVV Number:<input type="text" name="cvv" placeholder="Enter your CVV Number"/><br>
 <input type="submit" value="Pay"/>
 
 
