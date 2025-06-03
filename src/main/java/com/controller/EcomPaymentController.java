@@ -39,17 +39,15 @@ public class EcomPaymentController
 	
 	
 	@PostMapping("/epayment")
-	public String Epayment(EcomPaymentBean paymentbean,HttpSession session,EcomShipping shippingbean)
+	public String Epayment(EcomPaymentBean paymentbean,HttpSession session)
 	{
 		System.out.println(paymentbean.getCreditcardnumber());
 		System.out.println(paymentbean.getCvv());
 		System.out.println(paymentbean.getDate());
 		System.out.println(paymentbean.getPrice());
 		String email = (String)session.getAttribute("email");
+		PaymentService.run(paymentbean,email);
 		
-		
-		System.out.println(shippingbean.getCity());
-		PaymentService.run(paymentbean,email,shippingbean);
 		return "Sucess";
 	}
 	

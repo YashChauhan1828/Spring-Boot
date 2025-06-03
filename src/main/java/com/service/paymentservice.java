@@ -12,6 +12,7 @@ import com.bean.EcomProductCartBean;
 import com.bean.EcomShipping;
 import com.bean.EcomUserBean;
 
+import jakarta.servlet.http.HttpSession;
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.*;
 import net.authorize.api.controller.CreateTransactionController;
@@ -20,9 +21,10 @@ import net.authorize.api.controller.base.ApiOperationBase;
 @Service
 public class paymentservice {
     
+	@Autowired
+	HttpSession session;
 	
-	
-    public ANetApiResponse run(EcomPaymentBean paymentbean , String email ,EcomShipping shippingbean) {
+    public ANetApiResponse run(EcomPaymentBean paymentbean , String email  ) {
     	
     	String apiLoginId = "7b6SwXH2J";
     	String transactionKey = "44Cn4CY2Q5tb3vCM";
@@ -45,6 +47,8 @@ public class paymentservice {
         // Set email address (optional)
         CustomerDataType customer = new CustomerDataType();
         customer.setEmail(email);
+        EcomShipping shippingbean = (EcomShipping) session.getAttribute("ship");
+		System.out.println("Name : "+shippingbean.getFull_name());
         
 //        customer.setId(userbean.getUserId());
 
@@ -55,6 +59,15 @@ public class paymentservice {
         txnRequest.setCustomer(customer);
         txnRequest.setAmount(new BigDecimal(paymentbean.getPrice()).setScale(2, RoundingMode.CEILING));
 
+        NameAndAddressType customeraddress = new NameAndAddressType();
+        customeraddress.setFirstName(shippingbean.getFull_name());
+        customeraddress.setAddress(shippingbean.getAddress_line1());
+        customeraddress.setCity(shippingbean.getCity());
+        customeraddress.setCountry(shippingbean.getCountry());
+        customeraddress.setZip(shippingbean.getZip_code());
+     // After customeraddress is populated
+        txnRequest.setShipTo(customeraddress);
+       
         // Create the API request and set the parameters for this specific request
         CreateTransactionRequest apiRequest = new CreateTransactionRequest();
         apiRequest.setMerchantAuthentication(merchantAuthenticationType);
@@ -67,13 +80,9 @@ public class paymentservice {
         // Get the response
         CreateTransactionResponse response = new CreateTransactionResponse();
         response = controller.getApiResponse();
+//        
         
-        NameAndAddressType customeraddress = new NameAndAddressType();
-        customeraddress.setFirstName(shippingbean.getFull_name());
-        customeraddress.setAddress(shippingbean.getAddress_line1());
-        customeraddress.setCity(shippingbean.getCity());
-        customeraddress.setCountry(shippingbean.getCountry());
-        customeraddress.setZip(shippingbean.getZip_code());
+
         // Parse the response to determine results
         if (response!=null) {
             // If API Response is OK, go ahead and check the transaction response

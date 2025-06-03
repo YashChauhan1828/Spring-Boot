@@ -34,10 +34,8 @@ public class ShippingController
 		System.out.println(userbean.getUserId());
 		shippingbean.setUserId(userID);
 		shippingdao.saveDetails(shippingbean);
-		EcomShipping DbShip = shippingdao.getDetails(userID);
-		session.setAttribute("Ship", DbShip);
-		
-//		model.addAttribute("Name",shippingbean.getFull_name());
+		EcomShipping ship = shippingdao.getDetails(userID);
+		session.setAttribute("ship", ship);
 		return "Checkout";
 	}
 }
