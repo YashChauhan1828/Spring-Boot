@@ -10,7 +10,7 @@
 <h1>Checkout</h1>
 <br>
 <form action="epayment" method="post">
-Final Amount: <input type="hidden" name="price" value="${totalPrice}"/>
+Final Amount: <input type="hidden" name="price" value="${totalPrice}"/><br>
 Credit Card Number:<input type="text" name="creditcardnumber" placeholder="Enter your Credit Card Number"/><br>
 Expire Date:<input type="text" name="date"/><br>
 CVV Number:<input type="text" name="cvv" placeholder="Enter your CVV Number"/><br>

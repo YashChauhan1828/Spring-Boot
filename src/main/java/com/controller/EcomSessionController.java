@@ -52,6 +52,7 @@ public class EcomSessionController
 			session.setAttribute("user", dbUser);
 			model.addAttribute("firstName",dbUser.getFirstName());
 			model.addAttribute("profilePicturePath",dbUser.getProfilePicturePath());
+//			model.addAttribute("email", dbUser.getEmail());
 			return"Welcome";
 		}
 //		System.out.println(userbean.getEmail());

@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.bean.EcomPaymentBean;
 import com.bean.EcomProductCartBean;
+import com.bean.EcomShipping;
+import com.bean.EcomUserBean;
+import com.dao.EcomShippinDao;
 import com.service.EmailService;
 import com.service.paymentservice;
 
@@ -14,7 +17,6 @@ import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -30,14 +32,24 @@ public class EcomPaymentController
 	@Autowired
 	paymentservice PaymentService;
 	
+	@Autowired
+	EcomShippinDao shippingdao;
+	
+	
+	
+	
 	@PostMapping("/epayment")
-	public String Epayment(EcomPaymentBean paymentbean)
+	public String Epayment(EcomPaymentBean paymentbean,HttpSession session,EcomShipping shippingbean)
 	{
 		System.out.println(paymentbean.getCreditcardnumber());
 		System.out.println(paymentbean.getCvv());
 		System.out.println(paymentbean.getDate());
 		System.out.println(paymentbean.getPrice());
-		PaymentService.run(paymentbean);
+		String email = (String)session.getAttribute("email");
+		
+		
+		System.out.println(shippingbean.getCity());
+		PaymentService.run(paymentbean,email,shippingbean);
 		return "Sucess";
 	}
 	
@@ -51,10 +63,13 @@ public class EcomPaymentController
 	public String SendMail(@RequestParam("email") String email,HttpSession session,Model model ) 
 	{
 		System.out.println(email);
+		session.setAttribute("email", email);
 		emailservice.sendDemoMail(email, "HI welcome to ABCD");
 		Float totalPrice = (Float)session.getAttribute("totalPrice");
 		model.addAttribute(totalPrice);
-		return "Checkout";
+		
+		
+		return "redirect:/shipping";
 	}
 	
 }

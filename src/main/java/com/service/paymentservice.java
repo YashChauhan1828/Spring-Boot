@@ -4,9 +4,13 @@ package com.service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bean.EcomPaymentBean;
+import com.bean.EcomProductCartBean;
+import com.bean.EcomShipping;
+import com.bean.EcomUserBean;
 
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.*;
@@ -16,10 +20,13 @@ import net.authorize.api.controller.base.ApiOperationBase;
 @Service
 public class paymentservice {
     
-    public ANetApiResponse run(EcomPaymentBean paymentbean) {
+	
+	
+    public ANetApiResponse run(EcomPaymentBean paymentbean , String email ,EcomShipping shippingbean) {
     	
     	String apiLoginId = "7b6SwXH2J";
     	String transactionKey = "44Cn4CY2Q5tb3vCM";
+    	
         // Set the request to operate in either the sandbox or production environment
         ApiOperationBase.setEnvironment(Environment.SANDBOX);
 
@@ -37,7 +44,9 @@ public class paymentservice {
 
         // Set email address (optional)
         CustomerDataType customer = new CustomerDataType();
-        customer.setEmail("test@test.test");
+        customer.setEmail(email);
+        
+//        customer.setId(userbean.getUserId());
 
         // Create the payment transaction object
         TransactionRequestType txnRequest = new TransactionRequestType();
@@ -59,17 +68,29 @@ public class paymentservice {
         CreateTransactionResponse response = new CreateTransactionResponse();
         response = controller.getApiResponse();
         
+        NameAndAddressType customeraddress = new NameAndAddressType();
+        customeraddress.setFirstName(shippingbean.getFull_name());
+        customeraddress.setAddress(shippingbean.getAddress_line1());
+        customeraddress.setCity(shippingbean.getCity());
+        customeraddress.setCountry(shippingbean.getCountry());
+        customeraddress.setZip(shippingbean.getZip_code());
         // Parse the response to determine results
         if (response!=null) {
             // If API Response is OK, go ahead and check the transaction response
             if (response.getMessages().getResultCode() == MessageTypeEnum.OK) {
-                TransactionResponse result = response.getTransactionResponse();
+                TransactionResponse result = response.getTransactionResponse();                
                 if (result.getMessages() != null) {
                     System.out.println("Successfully created transaction with Transaction ID: " + result.getTransId());
                     System.out.println("Response Code: " + result.getResponseCode());
                     System.out.println("Message Code: " + result.getMessages().getMessage().get(0).getCode());
                     System.out.println("Description: " + result.getMessages().getMessage().get(0).getDescription());
-                    System.out.println("Auth Code: " + result.getAuthCode());
+                    System.out.println("Auth Code: " + result.getAuthCode());             
+                    System.out.println("Email : "+customer.getEmail());
+                    System.out.println("Name : "+customeraddress.getFirstName());
+                    System.out.println("Address : "+customeraddress.getAddress());
+                    System.out.println("City : "+customeraddress.getCity());
+                    System.out.println("Country : "+customeraddress.getCountry());
+                    System.out.println("zip : "+customeraddress.getZip());
                 } else {
                     System.out.println("Failed Transaction.");
                     if (response.getTransactionResponse().getErrors() != null) {
