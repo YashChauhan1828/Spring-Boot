@@ -12,7 +12,7 @@
 <div class="container-fluid">
 
 FirstName : ${user.firstName}<br><br>
-<img src="${user.profilePicturePath}" height="50%" width="50%" /><br>
+<img src="${user.profilePicturePath}" height="500" width="500" /><br>
 <a href="userproducts">Products</a>
 </div>
 

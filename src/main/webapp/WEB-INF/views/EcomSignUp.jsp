@@ -32,6 +32,7 @@
 	</div>
 		<input type="submit" value="Signup" class="btn btn-success"/>  
  	</form>
+ 	 <p class="sign-up text-center">Already have an Account?<a href="/elogin">Login</a></p>
  	</div>
  </div> 
  </div>

@@ -12,6 +12,7 @@ import com.bean.EcomUserBean;
 import com.dao.EcomShippinDao;
 import com.service.EmailService;
 import com.service.paymentservice;
+import com.util.Validators;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -60,14 +61,42 @@ public class EcomPaymentController
 	@PostMapping("/sendmail")
 	public String SendMail(@RequestParam("email") String email,HttpSession session,Model model ) 
 	{
-		System.out.println(email);
-		session.setAttribute("email", email);
+		EcomUserBean userbean = (EcomUserBean)session.getAttribute("user");
+		String Email = userbean.getEmail();
+		boolean isError = false ;
+		if(Validators.isBlank(email))
+		{
+			isError = true;
+			model.addAttribute("EmailError", "Please Enter your email");
+		}
+		else if(Validators.isEmail(email)==false) 
+		{
+			isError = true;
+			model.addAttribute("EmailError", "Please Enter valid email");
+		}
+		else if(email.matches(Email)==false)
+		{
+			isError = true;
+			model.addAttribute("EmailError", "Please Enter user email");
+		}
+		else
+		{
+			System.out.println(email);
+			session.setAttribute("email", email);
+		}
+		if(isError)
+		{
+			return "InputMail";
+		}
+		else
+		{
 		emailservice.sendDemoMail(email, "HI welcome to ABCD");
 		Float totalPrice = (Float)session.getAttribute("totalPrice");
 		model.addAttribute(totalPrice);
 		
 		
 		return "redirect:/shipping";
+		}
 	}
 	
 }

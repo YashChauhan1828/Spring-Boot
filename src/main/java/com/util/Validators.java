@@ -18,6 +18,16 @@ public class Validators
 		String alphaRegEx ="[a-zA-Z\\sa-zA-Z]+";
 		return data.matches(alphaRegEx);
 	}
+	public static boolean isDigit(String data)
+	{
+		String alphaRegEx ="[0-9]+";
+		return data.matches(alphaRegEx);
+	}
+	public static boolean isPhone(String data)
+	{
+		String alphaRegEx = "^\\+?[1-9]\\d{1,14}$";
+		return data.matches(alphaRegEx);
+	}
 	public static boolean isEmail(String data)
 	{
 		String ERegEx = "[a-zA-Z0-9]+@[a-zA-Z]+\\.[a-zA-Z0-9]{2,3}";

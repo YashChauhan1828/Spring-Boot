@@ -23,19 +23,19 @@ public class EcomSessionController
 	@Autowired
 	fileUploadService FileUploadService;
 	
-	@GetMapping("esignup")
+	@GetMapping(value = {"/","esignup"})
 	public String registration()
 	{
 		return "EcomSignUp";
 	} 
 	
-	@GetMapping(value = {"/","elogin"})
+	@GetMapping("/elogin")
 	public String eLogin()
 	{
 		return"EcomLogin";
 	}
 	
-	@PostMapping("/elogin")
+	@PostMapping("elogin")
 	public String eLoginPost(EcomUserBean userbean,Model model,HttpSession session)
 	{
 		System.out.println(userbean.getEmail());
