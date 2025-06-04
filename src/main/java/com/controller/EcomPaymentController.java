@@ -38,18 +38,68 @@ public class EcomPaymentController
 	
 	
 	
-	
-	@PostMapping("/epayment")
-	public String Epayment(EcomPaymentBean paymentbean,HttpSession session)
+	@GetMapping("/payment")
+	public String Payment()
 	{
-		System.out.println(paymentbean.getCreditcardnumber());
+		return"Checkout";
+	}
+	@PostMapping("/epayment")
+	public String Epayment(EcomPaymentBean paymentbean,HttpSession session,Model model )
+	{
+		boolean isError = false;
+		if(Validators.isBlank(paymentbean.getCreditcardnumber()))
+		{
+			isError = true;
+			model.addAttribute("CardError","Enter your card number");
+		}
+		else if(Validators.isCardValid(paymentbean.getCreditcardnumber())==false)
+		{
+			isError=true;
+			model.addAttribute("CardError","Enter valid card number");
+		}
+		else
+		{
+			System.out.println(paymentbean.getCreditcardnumber());
+		}
+		if(Validators.isBlank(paymentbean.getDate()))
+		{
+			isError = true;
+			model.addAttribute("DateError","Enter Date");
+		}
+		else if(Validators.isDate(paymentbean.getDate())==false)
+		{
+			isError = true;
+			model.addAttribute("DateError","Enter Valid Date");
+		}
+		else
+		{
+			System.out.println(paymentbean.getDate());
+		}
+		if(Validators.isBlank(paymentbean.getCvv()))
+		{
+			isError = true;
+			model.addAttribute("CVVError","Enter CVV number");
+		}
+		else if(Validators.isCVV(paymentbean.getCvv())==false)
+		{
+			isError = true;
+			model.addAttribute("CVVError","Enter vaild CVV number");
+		}
+		else
+		{
 		System.out.println(paymentbean.getCvv());
-		System.out.println(paymentbean.getDate());
+		}
+		if(isError)
+		{
+			return"Checkout";
+		}
+		else
+		{
 		System.out.println(paymentbean.getPrice());
 		String email = (String)session.getAttribute("email");
 		PaymentService.run(paymentbean,email);
-		
 		return "Sucess";
+		}
 	}
 	
 	@GetMapping("/inputmail")

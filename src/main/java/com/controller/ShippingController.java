@@ -53,6 +53,15 @@ public class ShippingController
 		{
 			System.out.println("Address : "+shippingbean.getAddress_line1());
 		}
+		if(Validators.isBlank(shippingbean.getAddress_line2()))
+		{
+			isError = true;
+			model.addAttribute("AddressError","Please Enter Your Address");
+		}
+		else
+		{
+			System.out.println("Address : "+shippingbean.getAddress_line2());
+		}
 		if(Validators.isBlank(shippingbean.getCity()))
 		{
 			isError = true;
@@ -88,7 +97,7 @@ public class ShippingController
 		if(Validators.isBlank(shippingbean.getCountry()))
 		{
 			isError = true;
-			model.addAttribute("StateError","Please Select Your Country");
+			model.addAttribute("CountryError","Please Select Your Country");
 		}
 		else
 		{
@@ -110,7 +119,7 @@ public class ShippingController
 		}
 		if(isError)
 		{
-			return "redirect:/shipping";
+			return "Shipping";
 		}
 		else
 		{
@@ -121,7 +130,7 @@ public class ShippingController
 		shippingdao.saveDetails(shippingbean);
 		EcomShipping ship = shippingdao.getDetails(userID);
 		session.setAttribute("ship", ship);
-		return "Checkout";
+		return "redirect:/payment";
 		}
 	}
 }

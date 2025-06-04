@@ -11,9 +11,9 @@
 <br>
 <form action="epayment" method="post">
 Final Amount: ${totalPrice}<input type="hidden" name="price" value="${totalPrice}"/><br>
-Credit Card Number:<input type="text" name="creditcardnumber" placeholder="Enter your Credit Card Number"/><br>
-Expire Date:<input type="text" name="date"/><br>
-CVV Number:<input type="text" name="cvv" placeholder="Enter your CVV Number"/><br>
+Credit Card Number:<input type="text" name="creditcardnumber" placeholder="Enter your Credit Card Number"/><span style="color: red">${CardError}</span><br>
+Expire Date:<input type="text" name="date"/><span style="color: red">${DateError}</span><br>
+CVV Number:<input type="text" name="cvv" placeholder="Enter your CVV Number"/><span style="color: red">${CVVError}</span><br>
 <input type="submit" value="Pay"/>
 </form>
 

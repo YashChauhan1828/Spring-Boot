@@ -25,7 +25,7 @@ public class EcomShippinDao
 	
 	public EcomShipping getDetails(Integer userId)
 	{
-		EcomShipping bean = stmt.queryForObject("select * from shipping_details where userId = ? LIMIT 1",
+		EcomShipping bean = stmt.queryForObject("select * from shipping_details where userId = ? ORDER BY id DESC LIMIT 1",
 				new BeanPropertyRowMapper<>(EcomShipping.class), new Object[] { userId });
 		return bean;
 	}
