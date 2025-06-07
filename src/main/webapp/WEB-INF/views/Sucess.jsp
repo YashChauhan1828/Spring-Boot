@@ -18,7 +18,7 @@
     <div class="alert alert-success p-5 shadow rounded">
         <h1 class="display-4 mb-4">Payment Done Successfully!</h1>
         <p class="lead">Thank you for your purchase. Your transaction has been completed successfully.</p>
-        <a href="ehome" class="btn btn-primary mt-3">Back to Home</a>
+        <a href="orderhistory" class="btn btn-primary mt-3">Order History</a>
     </div>
 </div>
 

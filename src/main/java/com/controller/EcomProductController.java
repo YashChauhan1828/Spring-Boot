@@ -45,6 +45,7 @@ public class EcomProductController
 	@GetMapping("/products")
 	public String listproducts(Model model)
 	{
+		 
 		List<EcomProductBean> products =productdao.getAllProducts();
 		model.addAttribute("products",products);
 		return "EcomListProducts";

@@ -27,25 +27,40 @@ public class EcomCartController
 	public String addToCart(@RequestParam("productId") Integer productId, HttpSession session)
 	{
 		EcomUserBean userbean = (EcomUserBean)session.getAttribute("user");
-		Integer userID = userbean.getUserId();
-		System.out.println(userbean.getUserId());
-		
-		EcomCartBean cartBean = new EcomCartBean();
-		
-		cartBean.setProductId(productId);
-		cartBean.setUserId(userID);
-		cartDao.addToCart(cartBean);
-		
-		return"redirect:/userproducts";
+		if(userbean == null)
+		{
+			return "EcomSignUp";
+		}
+		else 
+		{
+			Integer userID = userbean.getUserId();
+			System.out.println(userbean.getUserId());
+
+			EcomCartBean cartBean = new EcomCartBean();
+			session.setAttribute("productId", productId);
+			cartBean.setProductId(productId);
+			cartBean.setUserId(userID);
+			cartDao.addToCart(cartBean);
+
+			return "redirect:/userproducts";
+		}
 	}
 	@GetMapping("/mycart")
 	public String myCart(HttpSession session , Model model) 
 	{
 		EcomUserBean userBean = (EcomUserBean)session.getAttribute("user");
-		Integer userId = userBean.getUserId();
-		List<EcomProductCartBean> products =  cartDao.myCart(userId);
-		model.addAttribute("products",products);
-		return "MyCart";
+		if(userBean == null)
+		{
+			return "EcomSignUp";
+		}
+		else 
+		{
+			
+			Integer userId = userBean.getUserId();
+			List<EcomProductCartBean> products = cartDao.myCart(userId);
+			model.addAttribute("products", products);
+			return "MyCart";
+		}
 	}
 	@GetMapping("/removecartitem")
 	public String removeCartItem(@RequestParam("cartId") Integer cartId )

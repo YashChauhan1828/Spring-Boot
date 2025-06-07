@@ -103,9 +103,17 @@ public class EcomPaymentController
 	}
 	
 	@GetMapping("/inputmail")
-	public String imputMail() 
+	public String imputMail(HttpSession session) 
 	{
-		return "InputMail";
+		EcomUserBean userbean = (EcomUserBean)session.getAttribute("user");
+		if(userbean == null)
+		{
+			return "EcomSignUp";
+		}
+		else
+		{
+			return "InputMail";
+		}
 	}
 	
 	@PostMapping("/sendmail")

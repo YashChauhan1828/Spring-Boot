@@ -1,4 +1,4 @@
-package com.dao;
+	package com.dao;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.bean.EcomCartBean;
 import com.bean.EcomProductBean;
 import com.bean.EcomProductCartBean;
+import com.bean.EcomUserBean;
 
 @Repository
 public class EcomCartDao 
