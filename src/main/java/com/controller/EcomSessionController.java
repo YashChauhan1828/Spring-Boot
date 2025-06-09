@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bean.EcomUserBean;
 import com.dao.EcomUserDao;
@@ -127,6 +128,64 @@ public class EcomSessionController
 		}
 		
 	}
+	@GetMapping("updatepassword")
+	public String updatePassword()
+	{
+		return "ForgetPassword";
+	}
+	@PostMapping("eupdatepassword")
+	public String Newpassword( @RequestParam("email") String email,
+			@RequestParam("newpassword") String password,@RequestParam("confirmpassword") String password2,Model model)
+	{
+		if(Validators.isBlank(password))
+		{
+			isError = true;
+			model.addAttribute("passwordError","PLease enter new password");
+
+		}
+		else if(Validators.isPass(password)==false)
+		{
+			isError = true;
+			model.addAttribute("passwordError","PLease enter valid password");
+
+		}
+		else if(password.matches(password2)==false)
+		{
+			isError = true;
+			model.addAttribute("passwordError","Password must match");
+		}
+		else
+		{
+			model.addAttribute("passwordValue",password);
+		}
+		if(Validators.isBlank(email))
+		{
+			isError = true;
+			model.addAttribute("emailError","PLease enter your Email");
+
+		}
+		else if(Validators.isEmail(email)==false)
+		{
+			isError = true;
+			model.addAttribute("emailError","PLease enter valid Email");
+		}
+		else
+		{
+			model.addAttribute("emailValue",email);
+		}
+		if(isError)
+		{
+			return "ForgetPassword";
+		}
+		else
+		{
+
+			userdao.updatepassword(email, password);
+			model.addAttribute("updatepassword", "Password Updated Sucessfully");
+			return "EcomLogin";
+		}
+	}
+	
 	@GetMapping("/logout")
 	public String logout(HttpSession session)
 	{

@@ -71,7 +71,7 @@
 		</div>
 		<div class="col-md-6">
 			<h1> Ecom Login</h1>
-
+			${updatepassword }	
 			${error}
 			<form action="elogin" method="post">
 			<div class="form-group">
@@ -79,9 +79,11 @@
 			</div>
 			<div class="form-group">
 			<label>Password: </label><input type="password" class="form-control" name="password" placeholder="Enter your Password" /><br><br>
+			  <a href="updatepassword" class="forgot-pass">Forgot password</a>
 			</div>
 			<input type="submit" value="login" class="btn btn-success"/>
 			</form>
+			<p class="sign-up">Don't have an Account?<a href="esignup"> Sign Up</a></p>
 		</div>
 		
 	</div>

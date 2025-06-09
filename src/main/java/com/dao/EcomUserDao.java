@@ -32,4 +32,8 @@ public class EcomUserDao
 		}
 		return null;
 	}
+	public void updatepassword( String email , String password)
+	{
+		stmt.update("UPDATE ecomusers SET password = ? where email = ? ",password,email);
+	}
 }
