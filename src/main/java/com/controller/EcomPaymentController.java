@@ -1,17 +1,24 @@
 package com.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.bean.EcomOrderBean;
 import com.bean.EcomPaymentBean;
+import com.bean.EcomProductBean;
 import com.bean.EcomProductCartBean;
 import com.bean.EcomShipping;
 import com.bean.EcomUserBean;
+import com.dao.EcomCartDao;
+import com.dao.EcomProductDao;
 import com.dao.EcomShippinDao;
 import com.service.EmailService;
 import com.service.paymentservice;
+import com.users.ProductController;
 import com.util.Validators;
 
 import jakarta.servlet.http.HttpSession;
@@ -20,12 +27,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
-
-
 @Controller
 public class EcomPaymentController 
 
 {
+
+    private final ProductController productController;
 
 	@Autowired
 	EmailService emailservice;
@@ -36,7 +43,15 @@ public class EcomPaymentController
 	@Autowired
 	EcomShippinDao shippingdao;
 	
+	@Autowired
+	EcomProductDao productdao;
 	
+	@Autowired
+	EcomCartDao cartDao;
+
+    EcomPaymentController(ProductController productController) {
+        this.productController = productController;
+    }
 	
 	@GetMapping("/payment")
 	public String Payment()
@@ -95,10 +110,19 @@ public class EcomPaymentController
 		}
 		else
 		{
-		System.out.println(paymentbean.getPrice());
-		String email = (String)session.getAttribute("email");
-		PaymentService.run(paymentbean,email);
-		return "Sucess";
+			EcomUserBean userBean = (EcomUserBean)session.getAttribute("user");
+			Integer userId = userBean.getUserId();
+			List<EcomProductCartBean> cartItems = cartDao.myCart(userId);
+			for (EcomProductCartBean item : cartItems) {
+//		        EcomProductBean product = new EcomProductBean();
+		  
+		        productdao.reduceProductQuantity(item.getProductId(), item.getQty());    
+		    }
+			
+			System.out.println(paymentbean.getPrice());
+			String email = (String)session.getAttribute("email");
+			PaymentService.run(paymentbean,email);
+			return "Sucess";
 		}
 	}
 	

@@ -54,4 +54,8 @@ public class EcomProductDao
 		return bean;
 		
 	}
+	public void reduceProductQuantity(Integer productId , Integer qty)
+	{
+		stmt.update("UPDATE ecomproducts SET qty = qty - ? WHERE productId = ? AND qty >= ?",qty,productId,qty);
+	}
 }

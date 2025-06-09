@@ -75,7 +75,7 @@
                     <th>Image</th>
                     <th>Price (₹)</th>
                     <th>Qty</th>
-                 
+                 	<th>Review</th>
 
                 </tr>
             </thead>
@@ -90,7 +90,7 @@
                     <td><img src="<%=p.getProductImagePath() %>" alt="Product Image" class="product-img" /></td>
                     <td>₹<%=p.getPrice() %></td>
                     <td><%=p.getQty() %></td>
-                 
+                 	<td><a href="userproductview?productId=<%=p.getProductId()%>" %><button class="btn btn-primary mt-3" type="submit">Submit Review</button></a></td>
                    
                     
                 </tr>
